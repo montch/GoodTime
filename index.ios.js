@@ -20,38 +20,37 @@ class Project extends Component {
     super();
     this.state ={
       status:false,
-      time_total: 100,
+      time_total: 0,
       timer: 1,
       activity: "No activity set"
     }
    }
 
-  
-  
-    onUpdate(val){
-      console.log('in onUpdate');
-      console.log(val);
+    setTotalTime(){
+      let timer = this.state.timer.value ? this.state.timer.value : this.state.timer
       this.setState({
-          time_total: val
+         time_total:  parseInt(timer) + parseInt(this.state.time_total)
       });
     } 
   
+    setTimer(val) {
+       this.setState({
+         timer: val
+      });
+    }
 
     render() {
-      
       // View
         // TotalTime
         //ActivityToggle
         //TimePicker
         //AddButton
-      
-      
     return (
       <View>
-        <TimePicker timer={this.state.timer} onUpdate={this.onUpdate} />
-        <AddButton time_total={this.state.time_total} onUpdate={(val)=>this.onUpdate(val)} />
-        <TotalTime txt_up={this.txt_up} time_total={this.state.time_total} />
-        <ActivityToggle activity={this.state.activity}  status={this.state.status} onUpdate={this.onUpdate} />
+        <TimePicker timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
+        <AddButton time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
+        <TotalTime  time_total={this.state.time_total} />
+        <ActivityToggle activity={this.state.activity}  status={this.state.status} setTotalTime={this.setTotalTime} />
      
       </View>
     )
@@ -65,7 +64,7 @@ class Project extends Component {
    }  
       render() {
       return (
-        <Text >    WOOP {this.props.time_total}  </Text>
+        <Text >    {this.props.time_total}  </Text>
       )
       }
    
@@ -82,10 +81,7 @@ class Project extends Component {
   }
    
      addTime(){
-      console.log('addin time'); 
-      console.log(this.props.time_total);
-      this.props.onUpdate(6969)
-      
+      this.props.setTotalTime()
      }
    
    render() {
@@ -105,18 +101,17 @@ class Project extends Component {
    constructor(){
     super();
       this.state ={
-       timer: 99 
+       timer: 1
       }
    }  
     render() {
     return (
       <Picker 
-        style={{
-          width: 100,
-        }}
+        style={styles.picker}
         selectedValue= { this.state.timer }
         onValueChange={(value) => {
           this.setState({timer: value});
+          this.props.setTimer({value});
         }}>
          <Picker.Item label={'1'} value={'1'} />
          <Picker.Item label={'2'} value={'2'} />
@@ -136,7 +131,7 @@ class Project extends Component {
     super();
       this.state ={
        status: false, //this.props.status,
-       activity: 'wut' //this.props.activity
+       activity: 'No activity selected' //this.props.activity
       }
   }   
     
@@ -145,9 +140,9 @@ class Project extends Component {
     this.setState({
       status:!this.state.status
     });
-     console.log('toggle button handler: '+ this.state.status);
   }
   
+ 
     
     render() {
     return (
@@ -156,18 +151,14 @@ class Project extends Component {
        {renderIf(this.state.status)(
         <View style={styles.container}>
           <TextInput
-            style={{
-              height: 30, 
-              width: 100,
-              borderWidth: 1,
-              borderColor: "rgba(0,0,0,0.5)",
-            }}
+            style={styles.text_input}
             placeholder={ this.state.activity }
             placeholderTextColor={"rgba(198,198,204,1)"}
             onChangeText={(activity) => { this.setState({activity:  activity} ) }}
             onFocus={() => { this.setState({activity: ''})} }
             onSubmitEditing={() => {this.setState({activity: ''})}}
             value={(this.state && this.state.activity) || ''}
+  
           />
           <TouchableHighlight onPress={()=>this.toggleStatus()}>
             <Text> Set </Text>
@@ -206,6 +197,15 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  text_input: {
+    height: 30, 
+    width: 100,
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.5)"
+  },
+  picker: {
+      width: 100,
+  }
 });
 
 AppRegistry.registerComponent('Project', () => Project);

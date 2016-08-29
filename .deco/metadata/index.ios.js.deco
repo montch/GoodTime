@@ -3,12 +3,28 @@
 		{
 			"range": {
 				"from": {
-					"line": 159,
-					"ch": 22
+					"line": 155,
+					"ch": 34
 				},
 				"to": {
-					"line": 159,
-					"ch": 24
+					"line": 155,
+					"ch": 55
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "PlaceholderTextColor",
+			"group": "TEXT INPUT"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 200,
+					"ch": 12
+				},
+				"to": {
+					"line": 200,
+					"ch": 14
 				}
 			},
 			"type": "number",
@@ -18,12 +34,12 @@
 		{
 			"range": {
 				"from": {
-					"line": 160,
-					"ch": 21
+					"line": 201,
+					"ch": 11
 				},
 				"to": {
-					"line": 160,
-					"ch": 24
+					"line": 201,
+					"ch": 14
 				}
 			},
 			"type": "number",
@@ -33,33 +49,17 @@
 		{
 			"range": {
 				"from": {
-					"line": 162,
-					"ch": 27
+					"line": 203,
+					"ch": 17
 				},
 				"to": {
-					"line": 162,
-					"ch": 44
+					"line": 203,
+					"ch": 34
 				}
 			},
 			"editWith": "colorPicker",
 			"type": "string",
 			"name": "BorderColor",
-			"group": "TEXT INPUT"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 165,
-					"ch": 34
-				},
-				"to": {
-					"line": 165,
-					"ch": 55
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "PlaceholderTextColor",
 			"group": "TEXT INPUT"
 		}
 	]
