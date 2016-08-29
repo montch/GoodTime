@@ -3,12 +3,12 @@
 		{
 			"range": {
 				"from": {
-					"line": 155,
-					"ch": 34
+					"line": 150,
+					"ch": 36
 				},
 				"to": {
-					"line": 155,
-					"ch": 55
+					"line": 150,
+					"ch": 57
 				}
 			},
 			"editWith": "colorPicker",
@@ -19,11 +19,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 200,
+					"line": 193,
 					"ch": 12
 				},
 				"to": {
-					"line": 200,
+					"line": 193,
 					"ch": 14
 				}
 			},
@@ -34,11 +34,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 201,
+					"line": 194,
 					"ch": 11
 				},
 				"to": {
-					"line": 201,
+					"line": 194,
 					"ch": 14
 				}
 			},
@@ -49,11 +49,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 203,
+					"line": 196,
 					"ch": 17
 				},
 				"to": {
-					"line": 203,
+					"line": 196,
 					"ch": 34
 				}
 			},
