@@ -48,12 +48,12 @@ class Project extends Component {
     render() {
       return (
         <View>
-        <RNCarousel/>
-        <View style={styles.container}>
-          <TotalTime  time_total={this.state.time_total} />
-          <TimePicker timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
-          <AddButton time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
-        </View>
+          <RNCarousel/>
+          <View style={styles.container}>
+            <TotalTime  time_total={this.state.time_total} />
+            <TimePicker timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
+            <AddButton time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
+          </View>
        </View>
       )
     }
@@ -69,24 +69,36 @@ class RNCarousel extends Component {
   render() {
     return (
       <Carousel width={375} animate={false} onPageChange={()=>{console.log('page changed')}} >
-        <View style={styles.car}>
-          <Image style={styles.car_img} source={ require('./images/1.png')} />
-          <Text>Page 1</Text>
-        </View>
-        <View style={styles.car}>
-          <Image style={styles.car_img} source={ require('./images/2.png')} />
-          <Text>Page 2</Text>
-        </View>
-        <View style={styles.car}>
-          <Image style={styles.car_img} source={ require('./images/3.png')} />
-          <Text>Page 3</Text>
-        </View>
+        <CarouselImage text="One" /> 
+        <CarouselImage text="Two" /> 
+        <CarouselImage text="Three" /> 
       </Carousel>
     )
   }
 } 
 
-
+class CarouselImage extends Component {
+  constructor(){
+    super();
+  }  
+  
+  getCorrectImage(txt) {
+    switch (txt) {
+      case 'One': return require('./images/1.png');
+      case 'Two': return require('./images/2.png');
+      case 'Three': return require('./images/3.png'); 
+    }
+  }
+  
+  render() {
+     return (
+      <View style={styles.car}>
+        <Image style={styles.car_img} source={ this.getCorrectImage(this.props.text)} />
+        <Text>{this.props.text}</Text>
+      </View>
+      )
+  }
+}
 
 
 
