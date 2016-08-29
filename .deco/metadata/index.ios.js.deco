@@ -3,27 +3,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 150,
-					"ch": 34
-				},
-				"to": {
-					"line": 150,
-					"ch": 55
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "PlaceholderTextColor",
-			"group": "TEXT INPUT"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 183,
+					"line": 180,
 					"ch": 12
 				},
 				"to": {
-					"line": 183,
+					"line": 180,
 					"ch": 14
 				}
 			},
@@ -34,11 +18,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 190,
+					"line": 188,
 					"ch": 17
 				},
 				"to": {
-					"line": 190,
+					"line": 188,
 					"ch": 34
 				}
 			},
@@ -50,11 +34,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 198,
+					"line": 196,
 					"ch": 12
 				},
 				"to": {
-					"line": 198,
+					"line": 196,
 					"ch": 14
 				}
 			},
@@ -65,11 +49,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 199,
+					"line": 197,
 					"ch": 11
 				},
 				"to": {
-					"line": 199,
+					"line": 197,
 					"ch": 14
 				}
 			},
@@ -80,11 +64,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 201,
+					"line": 199,
 					"ch": 17
 				},
 				"to": {
-					"line": 201,
+					"line": 199,
 					"ch": 34
 				}
 			},

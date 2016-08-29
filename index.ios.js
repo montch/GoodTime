@@ -5,6 +5,8 @@
  */
 import renderIf from 'render-if'
 import React, { Component } from 'react';
+var Carousel = require('react-native-carousel');
+
 import {
   AppRegistry,
   StyleSheet,
@@ -13,7 +15,11 @@ import {
   TouchableHighlight,
   TextInput,
   Picker,
+  ListView,
+  Image,
 } from 'react-native'
+ 
+
 
 class Project extends Component {
    constructor(){
@@ -40,22 +46,49 @@ class Project extends Component {
     }
 
     render() {
-      // View
-        //TotalTime
-        //ActivityToggle
-        //TimePicker
-        //AddButton
       return (
+        <View>
+        <RNCarousel/>
         <View style={styles.container}>
-          <ActivityToggle activity={this.state.activity}  status={this.state.status} setTotalTime={this.setTotalTime} />
           <TotalTime  time_total={this.state.time_total} />
           <TimePicker timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
           <AddButton time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
         </View>
+       </View>
       )
     }
 }
+
+
+
+class RNCarousel extends Component {
+  constructor(){
+    super();
+  }  
   
+  render() {
+    return (
+      <Carousel width={375} animate={false} onPageChange={()=>{console.log('page changed')}} >
+        <View style={styles.car}>
+          <Image style={styles.car_img} source={ require('./images/1.png')} />
+          <Text>Page 1</Text>
+        </View>
+        <View style={styles.car}>
+          <Image style={styles.car_img} source={ require('./images/2.png')} />
+          <Text>Page 2</Text>
+        </View>
+        <View style={styles.car}>
+          <Image style={styles.car_img} source={ require('./images/3.png')} />
+          <Text>Page 3</Text>
+        </View>
+      </Carousel>
+    )
+  }
+} 
+
+
+
+
 
 class TotalTime extends Component {
  constructor(){
@@ -124,54 +157,6 @@ class TimePicker extends Component {
   }
 }
   
-class ActivityToggle extends Component {
-  constructor(){
-    super();
-    this.state ={
-      status: false, //this.props.status,
-      activity: 'No activity selected' //this.props.activity
-    }
-  }   
-
-  toggleStatus(){
-    this.setState({
-      status:!this.state.status
-    });
-  }
-
-  render() {
-    return (
-
-     <View style={styles.text_display}>
-       {renderIf(this.state.status)(
-        <View style={styles.container}>
-          <TextInput
-            style={styles.text_input}
-            placeholder={ this.state.activity }
-            placeholderTextColor={"rgba(198,198,204,1)"}
-            onChangeText={(activity) => { this.setState({activity:  activity} ) }}
-            onFocus={() => { this.setState({activity: ''})} }
-            onSubmitEditing={() => {this.setState({activity: ''})}}
-            value={(this.state && this.state.activity) || ''}
-          />
-          <TouchableHighlight onPress={()=>this.toggleStatus()}>
-            <Text> Set </Text>
-          </TouchableHighlight>
-        </View>
-       )}
-        {renderIf(!this.state.status)(
-          <TouchableHighlight onPress={()=>this.toggleStatus()}>
-            <Text> { this.state.activity } </Text>
-          </TouchableHighlight>
-        )}
-      </View>
-    )
-  }
-}
-  
-  
-  
-
 
 const styles = StyleSheet.create({
   container: {
@@ -180,13 +165,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+   car: {
+    width: 375,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    marginTop: 30,
+  },
+  car_img: {
+    width: 200,
+    height: 200
+  },
   text_display: {
     height: 30, 
+    marginTop: 10,
   },
   total_time: {
     fontSize: 60,
     textAlign: 'center',
-    margin: 80,
+    margin: 40,
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.5)"
   },
