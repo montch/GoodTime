@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   total_time: {
     fontSize: 60,
     textAlign: 'center',
-    margin: 40,
+    margin: 20,
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.5)"
   },
