@@ -19,6 +19,7 @@ import {
   Image,
 } from 'react-native'
  
+const actvities = ["Minecraft", "Dragon City", "Viva Pinata", "Xbox", "Netflix"]
 
 
 class Project extends Component {
@@ -47,12 +48,12 @@ class Project extends Component {
 
     render() {
       return (
-        <View>
+        <View style={styles.master}>
           <RNCarousel/>
           <View style={styles.container}>
             <TotalTime  time_total={this.state.time_total} />
-            <TimePicker timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
-            <AddButton time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
+            <TimePicker style={styles.bottom} timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
+            <AddButton style={styles.bottom}  time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
           </View>
        </View>
       )
@@ -64,14 +65,15 @@ class Project extends Component {
 class RNCarousel extends Component {
   constructor(){
     super();
-  }  
-  
+   }  
   render() {
     return (
       <Carousel width={375} animate={false} onPageChange={()=>{console.log('page changed')}} >
-        <CarouselImage text="One" /> 
-        <CarouselImage text="Two" /> 
-        <CarouselImage text="Three" /> 
+        <CarouselImage text={actvities[0]} /> 
+        <CarouselImage text={actvities[1]} /> 
+        <CarouselImage text={actvities[2]} /> 
+        <CarouselImage text={actvities[3]} /> 
+        <CarouselImage text={actvities[4]} /> 
       </Carousel>
     )
   }
@@ -84,9 +86,11 @@ class CarouselImage extends Component {
   
   getCorrectImage(txt) {
     switch (txt) {
-      case 'One': return require('./images/1.png');
-      case 'Two': return require('./images/2.png');
-      case 'Three': return require('./images/3.png'); 
+      case actvities[0]: return require('./images/1.png');
+      case actvities[1]: return require('./images/2.png');
+      case actvities[2]: return require('./images/3.png');
+      case actvities[3]: return require('./images/4.png'); 
+      case actvities[4]: return require('./images/5.png'); 
     }
   }
   
@@ -130,8 +134,10 @@ class AddButton extends Component {
  render() {
    return (
      <View ref={component => this._root = component} {...this.props} >
-       <TouchableHighlight onPress={()=>this.addTime()}>
-          <Text> Add Time </Text>
+       <TouchableHighlight 
+         style={styles.addButton}
+         onPress={()=>this.addTime()}>
+          <Text style={styles.bigPlus}>+</Text>
         </TouchableHighlight>
      </View>
    )
@@ -169,20 +175,26 @@ class TimePicker extends Component {
   }
 }
   
-
 const styles = StyleSheet.create({
+  master: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  bottom: {
+    marginTop: 20
+  },
    car: {
     width: 375,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: '#F5FCFF',
     marginTop: 30,
   },
   car_img: {
@@ -196,7 +208,7 @@ const styles = StyleSheet.create({
   total_time: {
     fontSize: 60,
     textAlign: 'center',
-    margin: 20,
+    marginBottom: 30,
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.5)"
   },
@@ -213,6 +225,29 @@ const styles = StyleSheet.create({
   },
   picker: {
       width: 100,
+  },
+  bigPlus: {
+    fontSize: 30
+  },
+  addButton: {
+    backgroundColor: '#00cc00',
+    borderColor: '#00cc00',
+    borderWidth: 1,
+    height: 70,
+    width: 70,
+    borderRadius: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 95,
+    right:-150,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 0
+    }
   }
 });
 

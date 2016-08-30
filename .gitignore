@@ -39,5 +39,7 @@ buck-out/
 android/app/libs
 android/keystores/debug.keystore
 
-.deco/
+.deco/*
 *.deco
+
+.deco/metadata/index.ios.js.deco
