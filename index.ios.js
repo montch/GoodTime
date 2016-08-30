@@ -29,11 +29,19 @@ class Project extends Component {
       status:false,
       time_total: 0,
       timer: 1,
-      activity: "No activity set"
+      activity_id: 0,
+      activity: actvities[0],
     }
    }
 
+   setActivityId(id) {
+     this.setState({
+       activity_id: id
+     })
+   }
+  
     setTotalTime(){
+      console.log('currently on id: ' +this.state.activity_id)
       let timer = this.state.timer.value ? this.state.timer.value : this.state.timer
       this.setState({
          time_total:  parseInt(timer) + parseInt(this.state.time_total)
@@ -49,7 +57,7 @@ class Project extends Component {
     render() {
       return (
         <View style={styles.master}>
-          <RNCarousel/>
+          <RNCarousel set_activity_id={(id)=>this.setActivityId(id)}/>
           <View style={styles.container}>
             <TotalTime  time_total={this.state.time_total} />
             <TimePicker style={styles.bottom} timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
@@ -68,9 +76,9 @@ class RNCarousel extends Component {
    }  
   render() {
     return (
-      <Carousel width={375} animate={false} onPageChange={()=>{console.log('page changed')}} >
-        <CarouselImage text={actvities[0]} /> 
-        <CarouselImage text={actvities[1]} /> 
+      <Carousel width={375} animate={false} onPageChange={(d)=>{this.props.set_activity_id(d)}} >
+        <CarouselImage text={actvities[0]}   /> 
+        <CarouselImage text={actvities[1]}    /> 
         <CarouselImage text={actvities[2]} /> 
         <CarouselImage text={actvities[3]} /> 
         <CarouselImage text={actvities[4]} /> 
@@ -96,7 +104,7 @@ class CarouselImage extends Component {
   
   render() {
      return (
-      <View style={styles.car}>
+      <View style={styles.car} >
         <Image style={styles.car_img} source={ this.getCorrectImage(this.props.text)} />
         <Text>{this.props.text}</Text>
       </View>
