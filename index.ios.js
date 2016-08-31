@@ -6,7 +6,7 @@
 import renderIf from 'render-if'
 import React, { Component } from 'react';
 var Carousel = require('react-native-carousel');
-
+var update = require('react-addons-update');
 import {
   AppRegistry,
   StyleSheet,
@@ -25,27 +25,37 @@ const actvities = ["Minecraft", "Dragon City", "Viva Pinata", "Xbox", "Netflix"]
 class Project extends Component {
    constructor(){
     super();
+    let att = {}
+    actvities.forEach(function(element){  att[element] = 0; } );
+     
     this.state ={
       status:false,
       time_total: 0,
       timer: 1,
       activity_id: 0,
       activity: actvities[0],
+      activity_time_totals: att
     }
    }
 
    setActivityId(id) {
      this.setState({
-       activity_id: id
+       activity_id: id,
+       activity: actvities[id]
      })
    }
   
     setTotalTime(){
-      console.log('currently on id: ' +this.state.activity_id)
-      let timer = this.state.timer.value ? this.state.timer.value : this.state.timer
-      this.setState({
-         time_total:  parseInt(timer) + parseInt(this.state.time_total)
-      });
+        let current = this.state.activity_time_totals[this.state.activity] ? this.state.activity_time_totals[this.state.activity] : 0
+        let timer = this.state.timer.value ? this.state.timer.value : this.state.timer
+        let new_total = parseInt(timer) + parseInt(current)
+        var orig = Object.assign({}, this.state.activity_time_totals);
+        var clone = Object.assign({}, this.state.activity_time_totals);
+        clone[this.state.activity] = new_total
+        var newObj = update(orig, {$merge:  clone});
+        this.setState({
+          activity_time_totals: newObj
+        })
     } 
   
     setTimer(val) {
@@ -59,7 +69,7 @@ class Project extends Component {
         <View style={styles.master}>
           <RNCarousel set_activity_id={(id)=>this.setActivityId(id)}/>
           <View style={styles.container}>
-            <TotalTime  time_total={this.state.time_total} />
+            <TotalTime  activity_time_totals={this.state.activity_time_totals} activity={this.state.activity} />
             <TimePicker style={styles.bottom} timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
             <AddButton style={styles.bottom}  time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
           </View>
@@ -120,7 +130,7 @@ class TotalTime extends Component {
  }  
   render() {
     return (
-      <Text style={styles.total_time} >    {this.props.time_total}  </Text>
+      <Text style={styles.total_time} >   {this.props.activity_time_totals[this.props.activity]}  </Text>
     )
   }
 }
