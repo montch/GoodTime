@@ -1,6 +1,4 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
  * @flow
  */
 import renderIf from 'render-if'
@@ -17,67 +15,109 @@ import {
   Picker,
   ListView,
   Image,
+  Alert,
 } from 'react-native'
  
 const actvities = ["Minecraft", "Dragon City", "Viva Pinata", "Xbox", "Netflix"]
 
-
 class Project extends Component {
-   constructor(){
+  constructor(){
     super();
-    let att = {}
-    actvities.forEach(function(element){  att[element] = 0; } );
-     
     this.state ={
       status:false,
       time_total: 0,
       timer: 1,
       activity_id: 0,
       activity: actvities[0],
-      activity_time_totals: att
+      activity_time_totals: this.initEmptyTimeTotals()
     }
-   }
-
-   setActivityId(id) {
-     this.setState({
-       activity_id: id,
-       activity: actvities[id]
-     })
-   }
+  }
   
-    setTotalTime(){
-        let current = this.state.activity_time_totals[this.state.activity] ? this.state.activity_time_totals[this.state.activity] : 0
-        let timer = this.state.timer.value ? this.state.timer.value : this.state.timer
-        let new_total = parseInt(timer) + parseInt(current)
-        var orig = Object.assign({}, this.state.activity_time_totals);
-        var clone = Object.assign({}, this.state.activity_time_totals);
-        clone[this.state.activity] = new_total
-        var newObj = update(orig, {$merge:  clone});
-        this.setState({
-          activity_time_totals: newObj
-        })
-    } 
+  initEmptyTimeTotals() {
+    let att = {}
+    actvities.forEach(function(element){  att[element] = 0; } );
+    return att
+  }
   
-    setTimer(val) {
-       this.setState({
-         timer: val
-      });
-    }
+  setActivityId(id) {
+   this.setState({
+     activity_id: id,
+     activity: actvities[id]
+   })
+  }
+  
+  setTotalTime(){
+    let current = this.state.activity_time_totals[this.state.activity] ? this.state.activity_time_totals[this.state.activity] : 0
+    let timer = this.state.timer.value ? this.state.timer.value : this.state.timer
+    let new_total = parseInt(timer) + parseInt(current)
+    var orig = Object.assign({}, this.state.activity_time_totals);
+    var clone = Object.assign({}, this.state.activity_time_totals);
+    clone[this.state.activity] = new_total
+    var newObj = update(orig, {$merge:  clone});
+    this.setState({
+      activity_time_totals: newObj
+    })
+  } 
+  
+  setTimer(val) {
+   this.setState({
+     timer: val
+   });
+  }
+  
+  resetTime() {
+   this.popAlert();
+  }
 
-    render() {
-      return (
-        <View style={styles.master}>
-          <RNCarousel set_activity_id={(id)=>this.setActivityId(id)}/>
-          <View style={styles.container}>
-            <TotalTime  activity_time_totals={this.state.activity_time_totals} activity={this.state.activity} />
-            <TimePicker style={styles.bottom} timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
-            <AddButton style={styles.bottom}  time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
-          </View>
-       </View>
-      )
-    }
+  popAlert() {
+   Alert.alert(
+    'Reset Timers?',
+    'Do you want to reset all the timers?',
+    [
+      {text: 'Cancel', onPress: () => {return false}, style: 'cancel'},
+      {text: 'OK', onPress: () => { this.resetAllTimers() } },
+    ]
+   )
+  }
+  
+  resetAllTimers() {
+   this.setState({
+    activity_time_totals: this.initEmptyTimeTotals() 
+   })
+  }
+
+  render() {
+    return (
+      <View style={styles.master}>
+        <RNCarousel set_activity_id={(id)=>this.setActivityId(id)}/>
+        <View style={styles.container}>
+          <TotalTime  activity_time_totals={this.state.activity_time_totals} activity={this.state.activity} />
+          <TimePicker style={styles.bottom} timer={this.state.timer} setTotalTime={this.setTotalTime} setTimer={(val)=>this.setTimer(val)}/>
+          <AddButton style={styles.bottom}  time_total={this.state.time_total} setTotalTime={()=>this.setTotalTime()} />
+          <ResetButton resetTime={()=>{this.resetTime()} } />
+        </View>
+     </View>
+    )
+  }
 }
 
+
+class ResetButton extends Component {
+  constructor(){
+    super();
+  }  
+  render() {
+    return (
+     <View >
+       <TouchableHighlight 
+          style={styles.resetButton}
+         onPress={()=>this.props.resetTime()}>
+          <Text>Reset</Text>
+        </TouchableHighlight>
+     </View>
+    )
+  }
+}
 
 
 class RNCarousel extends Component {
@@ -113,20 +153,18 @@ class CarouselImage extends Component {
   }
   
   render() {
-     return (
-      <View style={styles.car} >
-        <Image style={styles.car_img} source={ this.getCorrectImage(this.props.text)} />
-        <Text>{this.props.text}</Text>
-      </View>
-      )
+   return (
+    <View style={styles.car} >
+      <Image style={styles.car_img} source={ this.getCorrectImage(this.props.text)} />
+      <Text>{this.props.text}</Text>
+    </View>
+    )
   }
 }
 
-
-
 class TotalTime extends Component {
  constructor(){
-    super();
+  super();
  }  
   render() {
     return (
@@ -134,7 +172,6 @@ class TotalTime extends Component {
     )
   }
 }
-
 
 class AddButton extends Component {
   constructor(){
@@ -266,6 +303,16 @@ const styles = StyleSheet.create({
       height: 1,
       width: 0
     }
+  },
+  resetButton: {
+    height: 70,
+    width: 70,
+    borderRadius: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 5,
+    right:130,
   }
 });
 
